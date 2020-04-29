@@ -1,0 +1,38 @@
+#piece{
+    visibility: hidden;
+}
+#compteur{
+    height: 3em;
+    width: auto;
+}
+#sac{
+    visibility: hidden;
+    position: fixed;
+
+}
+.compteur{
+    margin: 2rem 2rem;
+}
+#compteurChiffre{
+    font-size: 1.7rem;
+}
+.bonus{
+    float: right;
+}
+.ContainerPetit{
+    height: 100%;
+    width: 20%;
+    background-color: brown;
+}*
+.droite{
+    float: right;
+}
+.Container{
+    position: fixed;
+    width:80%;
+    height: 100%;
+    background-color: green;
+}
+.gauche{
+    float:left;
+}
