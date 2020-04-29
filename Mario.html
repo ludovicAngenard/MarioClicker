@@ -101,7 +101,7 @@
             }
        
             function autoGain(){
-                if(gainGenere<=400)
+                if(gainGenere<=40)
                 {
                     document.getElementById('MarioPoids').style.visibility="visible";
                     document.getElementById('pieceDessous').style.visibility="hidden";
@@ -111,12 +111,14 @@
                 else{
                     luigiEstActif=false;
                     gainGenere=0;
+                    document.getElementById('MarioPoids').style.visibility="hidden";
+                    document.getElementById('pieceDessous').style.visibility="hidden";
                 }
                 
             }
             function ajoutDuGain(){
                 
-                score+=1*luigi.effetBonus
+                score+=10*luigi.effetBonus
                 gainGenere+=1; 
                 afficheCompteur()
                 document.getElementById('pieceDessous').style.visibility="visible";
@@ -178,14 +180,18 @@
                     document.getElementById('sac').style.visibility='hidden';
                     ouvert=!ouvert;
                 }
-                
+ 
             }
+            function combat(){
+                document.getElementById('contientMarioEtPiece').style.display='none';
+            }
+           
             
             </script>
             
     </head>
     <body>
-        <div class='Container gauche'>
+        <div class='Container gauche' id='contientMarioEtPiece'>
 
             <div class="d-flex justify-content-start">
                 <img src='piece.png' id="compteur"  class='compteur'; /> 
@@ -206,23 +212,30 @@
                 <img src='block.png' class="block"  />
             </div>
             <div class="d-flex justify-content-center">
-                <img src='piece.png' id="pieceDessous" />
+                <img src='10Coin.png' id="pieceDessous" />
             </div>
             
             <div class=" gauche " id='inventaireBoutton'>
                 <img src='MysteryBox.png'   onclick=apparitionSac(); />
               
             </div>
+            <div class=" droite " id='combatBouton'>
+                <img src='bowserBouton.png'   onclick=combat(); />
+              
+            </div>
 
             <div class="d-flex justify-content-center">  
                 <img src='MarioNSMBUDeluxe.png' class="Mario" id='icon' onclick=saut(); />
             </div>
-            
-
-            
-
 
         </div>
+
+        <div  class='Container' id="ContientCombat"> 
+            
+        </div>
+
+
+
 
         <div class='ContainerPetit droite'>
 
