@@ -36,3 +36,21 @@
 .gauche{
     float:left;
 }
+.clear{
+    clear:both;
+}
+.titre{
+    text-align: center;
+    font-size: 2rem;
+}
+
+#inventaireBoutton{
+    margin-top: 28rem;
+}
+#icon{
+    margin-right: 5rem;
+}
+#inventaireNombreChampignon{
+    font-size: 1.5rem;
+    margin-left: 2rem;
+}
