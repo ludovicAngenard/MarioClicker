@@ -10,10 +10,9 @@
             var score= 0;
             var multiplicateur=1;
             var pieceEtoile=100;
-            var champignon=100;
             var ouvert=false;
-            var nombreChampignon=0;
-
+            const champignon= new Bonus(100,0);
+           
            function multiplicateurGain(){
                if (score>=pieceEtoile)
                {
@@ -30,27 +29,42 @@
            }
 
 
+           class Bonus {
+                constructor(prix, nombre) {
+                    this.prix = prix;
+                    this.nombre = nombre;
+                }
+                
+                get prix() {
+                    return this.prix;
+                }
+                get nombre(){
+                    return this.nombre;
+                }
 
+                static calculPrixBonus(){            
+                    this.prix*=2.5;
+                    return this.prix;
+                }
+
+                static nombreBonus(){
+                    this.nombre+=1;
+                    return this.nombre;
+                }
+
+                }
 
            function multiplicateurDegat(){
-               if (score>=champignon){
-                    score-=champignon;
-                    champignon*=2.5;
-                    nombreChampignon+=1;
-                    affichePrixMultiplicateurDegat()
-                    afficheCompteur();
-                    afficheNombreMultiplicateurDegat();
-                    
+               if (score>=champignon.prix){
+                    champignon.calculPrixBonus()
+                    champignon.nombreBonus()
+                    score-=champignon.prix
                 }
+                document.getElementById('prixChampignon').textContent='X : '+champignon.prix;
+                document.getElementById('inventaireNombreChampignon').textContent='X : '+champignon.nombre;
+                afficheCompteur()
            }
-           function affichePrixMultiplicateurDegat(){
-            document.getElementById('prixChampignon').textContent='X : '+champignon;
-           }
-
-           function afficheNombreMultiplicateurDegat(){
-            document.getElementById('inventaireNombreChampignon').textContent='X : '+nombreChampignon;
-           }
-
+       
 
 
 
