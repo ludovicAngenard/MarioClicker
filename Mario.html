@@ -8,74 +8,138 @@
         <script language="javascript"> 
             var sauter=false;
             var score= 0;
-            var multiplicateur=1;
-            var pieceEtoile=100;
             var ouvert=false;
-            const champignon= new Bonus(100,0);
-           
-           function multiplicateurGain(){
-               if (score>=pieceEtoile)
-               {
-                score-=pieceEtoile
-                pieceEtoile*=1.5;
-                multiplicateur*=2 ;
-                affichePrixPieceEtoile();
-                afficheCompteur();
-               }
-              
-           }
-           function affichePrixPieceEtoile(){
-            document.getElementById('prixPieceEtoile').textContent='Prix : '+pieceEtoile;          
-           }
+            var gainGenere=0;
+            var luigiEstActif=false;
 
-
-           class Bonus {
-                constructor(prix, nombre) {
+            class Bonus 
+            {
+                multiplicateurEffet = 1;
+                constructor(prix, nombre) 
+                {
                     this.prix = prix;
                     this.nombre = nombre;
                 }
                 
-                get prix() {
+                get prixBonus() 
+                {
                     return this.prix;
                 }
-                get nombre(){
+                get nombreBonus()
+                {
                     return this.nombre;
                 }
-
-                static calculPrixBonus(){            
-                    this.prix*=2.5;
+                get effetBonus()
+                {
+                    return this.multiplicateurEffet;
+                }
+                calculPrixBonus()
+                {            
+                    this.prix*=1.5;
                     return this.prix;
                 }
 
-                static nombreBonus(){
+                calculNombreBonus()
+                {
                     this.nombre+=1;
                     return this.nombre;
                 }
-
+                calculEffetBonus()
+                {
+                    this.multiplicateurEffet*=2;
+                    return  this.multiplicateurEffet;
                 }
 
-           function multiplicateurDegat(){
-               if (score>=champignon.prix){
-                    champignon.calculPrixBonus()
-                    champignon.nombreBonus()
-                    score-=champignon.prix
+            }
+
+            var pieceEtoile= new Bonus(100,0);
+
+            function multiplicateurDeGain(){
+               if (score>=Math.round(pieceEtoile.prixBonus))
+               {
+                    score-=Math.round(pieceEtoile.prixBonus)
+                    pieceEtoile.calculPrixBonus()
+                    pieceEtoile.calculNombreBonus()
+                    pieceEtoile.calculEffetBonus()
+               }
+               document.getElementById('prixPieceEtoile').textContent='Prix : '+Math.round(pieceEtoile.prixBonus);
+               afficheCompteur()
+           }
+          
+
+
+
+            var champignon= new Bonus(100,0);
+
+            function multiplicateurDegat(){
+               
+               if (score>=Math.round(champignon.prixBonus)){
+                    score-=Math.round(champignon.prixBonus);
+                    champignon.calculPrixBonus();
+                    champignon.calculNombreBonus();
+                    champignon.calculEffetBonus();
                 }
-                document.getElementById('prixChampignon').textContent='X : '+champignon.prix;
-                document.getElementById('inventaireNombreChampignon').textContent='X : '+champignon.nombre;
+                document.getElementById('prixChampignon').textContent='X : '+Math.round(champignon.prixBonus);
+                document.getElementById('inventaireNombreChampignon').textContent='X : '+Math.round(champignon.nombreBonus);
                 afficheCompteur()
            }
        
+            var luigi= new Bonus(200,0);
 
+            function achatAutoGain(){
+                if ((score>=Math.round(luigi.prixBonus)) && (!luigiEstActif)){
+                    score-=Math.round(luigi.prixBonus);
+                    luigi.calculPrixBonus();
+                    luigi.calculNombreBonus();
+                    luigiEstActif=true;
+                    autoGain();
+                    normal();
+                   
+                }
+                document.getElementById('prixLuigi').textContent='X : '+Math.round(luigi.prixBonus);
+                afficheCompteur()
+            }
+       
+            function autoGain(){
+                if(gainGenere<=400)
+                {
+                    document.getElementById('MarioPoids').style.visibility="visible";
+                    document.getElementById('pieceDessous').style.visibility="hidden";
+                    setTimeout(ajoutDuGain, 100);
+                    
+                }
+                else{
+                    luigiEstActif=false;
+                    gainGenere=0;
+                }
+                
+            }
+            function ajoutDuGain(){
+                
+                score+=1*luigi.effetBonus
+                gainGenere+=1; 
+                afficheCompteur()
+                document.getElementById('pieceDessous').style.visibility="visible";
+                setTimeout(autoGain, 200);
+                
+                
+                
+            }
 
-
-             function saut()
+            function saut()
             {
                
                 if (!sauter){
-                    document.getElementById('icon').src='sticker-mario-saut.jpg.png';
-                    document.getElementById('piece').style.visibility="visible";
+                    if (luigiEstActif){
+                        document.getElementById('icon').src='LuigiSaut.png';
+                    }
+                    else
+                    {
+                        document.getElementById('icon').src='sticker-mario-saut.jpg.png';
+                    }
                     sauter = !sauter;
                     compteur()
+                    document.getElementById('piece').style.visibility="visible";
                     setTimeout(normal, 200);
                                  
                 }
@@ -84,18 +148,25 @@
 
             function normal()
             {
-                document.getElementById('icon').src='MarioNSMBUDeluxe.png';
+                if (luigiEstActif){
+                    document.getElementById('icon').src='Luigi.png';
+                }
+                else{
+                    document.getElementById('icon').src='MarioNSMBUDeluxe.png';
+                }
+                
                 document.getElementById('piece').style.visibility="hidden";
                 sauter=false;
 
             }
 
             function compteur(){
-                score += 1 * multiplicateur;
+                score += 1 * pieceEtoile.effetBonus;
+                
                 afficheCompteur()
             }
             function afficheCompteur(){
-                document.getElementById('compteurChiffre').textContent="X"+score;
+                document.getElementById('compteurChiffre').textContent="X "+score;
             }
 
             function apparitionSac(){
@@ -121,12 +192,21 @@
                 <p id='compteurChiffre' class='compteur'>X 0</p>
             </div>
 
+            
+
             <div class="d-flex justify-content-center">
                 <img src='piece.png' id="piece" />
+            </div>
+            
+            <div class="d-flex justify-content-center">
+                <img src='MarioPound.png' id="MarioPoids" />
             </div>
 
             <div class="d-flex justify-content-center">
                 <img src='block.png' class="block"  />
+            </div>
+            <div class="d-flex justify-content-center">
+                <img src='piece.png' id="pieceDessous" />
             </div>
             
             <div class=" gauche " id='inventaireBoutton'>
@@ -144,10 +224,15 @@
 
         </div>
 
-        <div class='ContainerPetit droite'>*
+        <div class='ContainerPetit droite'>
 
-            <img src='StarCoin.png' class="bonus" id='StarCoin' onclick=multiplicateurGain(); />
+            <img src='StarCoin.png' class="bonus" id='StarCoin' onclick=multiplicateurDeGain(); />
             <p id='prixPieceEtoile'>Prix : 100</p>
+
+            <div class='clear'></div>
+
+            <img src='LuigiCasquette.png' class="bonus" id='luigi' onclick=achatAutoGain(); />
+            <p id='prixLuigi'>Prix : 200</p>
 
             <div class='clear'></div>
 
@@ -165,7 +250,7 @@
             <p class='titre'>INVENTAIRE</p>
 
             <div>
-                <img src='champignon.png' class="gauche"  onclick=apparitionSac(); />
+                <img src='champignon.png' class="gauche"  />
 
                 <div class='clear'></div>
 
