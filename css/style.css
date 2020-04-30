@@ -1,0 +1,127 @@
+
+body {
+    background-image: url("../images/games.jpg");
+    }
+#piece{
+    position: relative;
+    visibility: hidden;
+    z-index: 10;
+}
+.pieceCout{
+    height: 3em;
+    width: auto;
+    margin-top: 2rem;
+}
+.texteCout{
+    margin-top: 2rem;
+    font-size: 1.7rem;
+}
+#prixLuigi{
+    margin-top: 3rem;
+}
+#prixChampignon{
+    margin-top: 3rem;
+}
+#sac{
+    visibility: hidden;
+    position: fixed;
+
+}
+.compteur{
+    margin: 2rem 2rem;
+}
+#compteurChiffre{
+    font-size: 1.7rem;
+}
+.bonus{
+    float: right;
+    margin-top: 2rem;
+}
+.ContainerPetit{
+    position: absolute;
+    width: 20%;
+    
+}*
+.droite{
+    float: right;
+    right: 0%;
+}
+.ContainerMoyen{
+    height: 100%;
+    width: 20%;
+    
+}
+.Container{
+    position: fixed;
+    width:100%;
+    height: 100%;
+  
+}
+#contientMarioEtPiece{
+    display: block;
+}
+.gauche{
+    float:left;
+}
+.clear{
+    clear:both;
+}
+.titre{
+    text-align: center;
+    font-size: 2rem;
+}
+
+#inventaireBoutton{
+    margin-top: 28rem;
+    margin-left: 2rem;
+}
+#icon{
+    margin-right: 1rem;
+}
+#inventaireNombreChampignon{
+    font-size: 1.5rem;
+    margin-left: 2rem;
+}
+#pieceDessous{
+    position: absolute;
+    visibility:hidden;
+}
+#MarioPoids{
+    position: absolute;
+    visibility:hidden;
+    z-index: 0;
+  
+}
+.texte{
+    color: white;
+    font-weight: bold;
+}
+#combatBouton{
+
+    margin-top: 25rem;
+}
+#ContientCombat{
+    display: none;
+}
+#marioCombat{
+    margin-top:20% ;
+}
+#bowserCombat{
+    margin-top:15% ;
+    margin-right: 20%;
+}
+#bowserVieIndicateur{
+    margin-top: 1.5rem;
+    margin-right: 1.5rem;
+    font-size: 1.7rem;
+}
+#bonusCombat{
+    display: none;
+    margin-top: 10%;
+}
+#boutique{
+    margin-top: 2%;
+}
+.fondBrique{
+    background-image: url("../images/brique.png");
+}

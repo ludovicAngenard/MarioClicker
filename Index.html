@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf8">
+        <title> first page</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/style.css">
+        <script language="javascript"> 
+            var sauter=false;
+            var score= 0;
+            var ouvert=false;
+            var gainGenere=0;
+            var luigiEstActif=false;
+            var vieDeBowser=1000;
+
+            class Bonus 
+            {
+                multiplicateurEffet = 1;
+                constructor(prix, nombre) 
+                {
+                    this.prix = prix;
+                    this.nombre = nombre;
+                }
+                
+                get prixBonus() 
+                {
+                    return this.prix;
+                }
+                get nombreBonus()
+                {
+                    return this.nombre;
+                }
+                get effetBonus()
+                {
+                    return this.multiplicateurEffet;
+                }
+                calculPrixBonus()
+                {            
+                    this.prix*=1.5;
+                    return this.prix;
+                }
+
+                calculNombreBonus()
+                {
+                    this.nombre+=1;
+                    return this.nombre;
+                }
+                calculEffetBonus()
+                {
+                    this.multiplicateurEffet*=2;
+                    return  this.multiplicateurEffet;
+                }
+
+            }
+
+            var pieceEtoile= new Bonus(100,0);
+
+            function multiplicateurDeGain(){
+               if (score>=Math.round(pieceEtoile.prixBonus))
+               {
+                    score-=Math.round(pieceEtoile.prixBonus)
+                    pieceEtoile.calculPrixBonus()
+                    pieceEtoile.calculNombreBonus()
+                    pieceEtoile.calculEffetBonus()
+               }
+               document.getElementById('prixPieceEtoile').textContent='Prix : '+Math.round(pieceEtoile.prixBonus);
+               afficheCompteur()
+           }
+          
+
+
+
+            var champignon= new Bonus(100,0);
+
+            function multiplicateurDegat(){
+               
+               if (score>=Math.round(champignon.prixBonus)){
+                    score-=Math.round(champignon.prixBonus);
+                    champignon.calculPrixBonus();
+                    champignon.calculNombreBonus();
+                    champignon.calculEffetBonus();
+                }
+                document.getElementById('prixChampignon').textContent='X : '+Math.round(champignon.prixBonus);
+                document.getElementById('inventaireNombreChampignon').textContent='X : '+Math.round(champignon.nombreBonus);
+                afficheCompteur()
+           }
+       
+            var luigi= new Bonus(200,0);
+
+            function achatAutoGain(){
+                if ((score>=Math.round(luigi.prixBonus)) && (!luigiEstActif)){
+                    score-=Math.round(luigi.prixBonus);
+                    luigi.calculPrixBonus();
+                    luigi.calculNombreBonus();
+                    luigiEstActif=true;
+                    autoGain();
+                    normal();
+                   
+                }
+                document.getElementById('prixLuigi').textContent='X : '+Math.round(luigi.prixBonus);
+                afficheCompteur()
+            }
+       
+            function autoGain(){
+                if(gainGenere<=40)
+                {
+                    document.getElementById('MarioPoids').style.visibility="visible";
+                    document.getElementById('pieceDessous').style.visibility="hidden";
+                    setTimeout(ajoutDuGain, 100);
+                    
+                }
+                else{
+                    luigiEstActif=false;
+                    gainGenere=0;
+                    document.getElementById('MarioPoids').style.visibility="hidden";
+                    document.getElementById('pieceDessous').style.visibility="hidden";
+                }
+                
+            }
+            function ajoutDuGain(){
+                
+                score+=10*luigi.effetBonus
+                gainGenere+=1; 
+                afficheCompteur()
+                document.getElementById('pieceDessous').style.visibility="visible";
+                setTimeout(autoGain, 200);
+                
+                
+                
+            }
+
+            function saut()
+            {
+               
+                if (!sauter){
+                    if (luigiEstActif){
+                        document.getElementById('icon').src='images/LuigiSaut.png';
+                    }
+                    else
+                    {
+                        document.getElementById('icon').src='images/sticker-mario-saut.jpg.png';
+                    }
+                    sauter = !sauter;
+                    compteur()
+                    document.getElementById('piece').style.visibility="visible";
+                    setTimeout(normal, 200);
+                                 
+                }
+    
+            }
+
+            function normal()
+            {
+                if (luigiEstActif){
+                    document.getElementById('icon').src='images/Luigi.png';
+                }
+                else{
+                    document.getElementById('icon').src='images/MarioNSMBUDeluxe.png';
+                }
+                
+                document.getElementById('piece').style.visibility="hidden";
+                sauter=false;
+
+            }
+
+            function compteur(){
+                score += 1 * pieceEtoile.effetBonus;
+                
+                afficheCompteur()
+            }
+            function afficheCompteur(){
+                document.getElementById('compteurChiffre').textContent="X "+score;
+            }
+
+            function apparitionSac(){
+                if (!ouvert){
+                    document.getElementById('sac').style.visibility='visible';
+                    ouvert=!ouvert;
+                }
+                else{
+                    document.getElementById('sac').style.visibility='hidden';
+                    ouvert=!ouvert;
+                }
+ 
+            }
+           
+            function combat()
+            {
+                document.getElementById('contientMarioEtPiece').style.display='none';
+                document.getElementById('boutique').style.display='none';
+                document.getElementById('ContientCombat').style.display='block';
+                document.getElementById('bonusCombat').style.display='block';
+                
+            }
+
+            function cliqueContreBowser(){
+                if (vieDeBowser>0){
+                    vieDeBowser-=1;
+                    document.getElementById('bowserVieIndicateur').textContent=vieDeBowser+' X ';
+                  
+                }
+                else{
+                    document.getElementById('contientMarioEtPiece').style.display='block';
+                    document.getElementById('ContientCombat').style.display='none';
+
+                }
+                
+            }
+           
+            
+            </script>
+            
+    </head>
+    <body>
+        <div class='Container gauche' id='contientMarioEtPiece'>
+
+            <div class="d-flex justify-content-start">
+                <img src='images/piece.png' id="compteur"  class='compteur pieceCout'; /> 
+                <p id='compteurChiffre' class='compteur texte'>X 0</p>
+            </div>
+
+            
+
+            <div class="d-flex justify-content-center">
+                <img src='images/piece.png' id="piece" />
+            </div>
+            
+            <div class="d-flex justify-content-center">
+                <img src='images/MarioPound.png' id="MarioPoids" />
+            </div>
+
+            <div class="d-flex justify-content-center">
+                <img src='images/block.png' class="block"  />
+            </div>
+            <div class="d-flex justify-content-center">
+                <img src='images/10Coin.png' id="pieceDessous" />
+            </div>
+            
+            <div class=" gauche " id='inventaireBoutton'>
+                <img src='images/MysteryBox.png'   onclick=apparitionSac(); />
+              
+            </div>
+            <div class=" droite " id='combatBouton'>
+                <img src='images/bowserBouton.png'   onclick=combat(); />
+              
+            </div>
+
+            <div class="d-flex justify-content-center">  
+                <img src='images/MarioNSMBUDeluxe.png' class="Mario" id='icon' onclick="saut();" />
+            </div>
+
+        </div>
+
+
+
+        <div  class='Container' id="ContientCombat"> 
+
+            <div class='d-flex justify-content-end'>
+                <p id="bowserVieIndicateur" class='droite texte'> 1000 X</p>
+                <img class='droite' src='images/Bowserhead.png' />
+            </div>
+
+            <div class="gauche " id="marioCombat">
+                <img src='images/MarioNSMBUDeluxe.png'/>
+            </div>
+
+            <div class="droite " id="bowserCombat">
+                <img src='images/Bowser.png' onclick="cliqueContreBowser();"/>
+            </div>
+
+        </div>
+
+
+
+
+        <div class='ContainerPetit droite fondBrique' id='boutique'>
+
+            
+            <img src='images/StarCoin.png' class="bonus" id='StarCoin' onclick=multiplicateurDeGain(); />
+            <img src='images/piece.png' class='pieceCout gauche' />
+            <p id='prixPieceEtoile' class='texteCout texte'>X 100</p>
+            <div class='clear'></div>
+            <p class='titre texte'>Boost de pièces</p>
+
+          
+            
+            <img src='images/LuigiCasquette.png' class="bonus" id='luigi' onclick=achatAutoGain(); />
+            <img src='images/piece.png'  class='pieceCout gauche'/>
+            <p id='prixLuigi' class='texteCout texte '>X 200</p>
+            <div class='clear'></div>
+            <p class='titre texte'>A deux c'est mieux</p>
+
+           
+
+            
+            <img src='images/champignon.png' class="bonus " id='champignon' onclick=multiplicateurDegat(); />
+            <img src='images/piece.png'  class='pieceCout gauche'/>
+            <p id='prixChampignon' class='texteCout texte '>X 100</p>
+            <div class='clear'></div>
+            <p class='titre texte'>Boost de dégats</p>
+            
+
+        </div>
+        
+
+       
+
+        <div id='sac' class="ContainerMoyen fondBrique">
+           
+            <img src='images/croix.png' class="droite" id='StarCoin' onclick=apparitionSac(); />
+            <div class='clear'></div>
+
+            <p class='titre texte'>INVENTAIRE</p>
+
+            <div>
+                <img src='images/champignon.png' class="gauche"  />
+
+                <div class='clear'></div>
+
+                <p id='inventaireNombreChampignon' class='texte'>X 0 </p>
+            </div>
+        </div>
+
+
+
+        <div class='ContainerPetit droite fondBrique' id='bonusCombat'>
+
+            <img src='images/champignon.png' class="bonus" id='champignonCombat'; />
+            <p id='' class=' texte'>Nombre : ?</p>
+
+        </div>
+    </body>
+</html>
