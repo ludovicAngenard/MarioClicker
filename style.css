@@ -22,18 +22,28 @@
     float: right;
 }
 .ContainerPetit{
-    height: 100%;
+    position: fixed;
+    
     width: 20%;
     background-color: brown;
 }*
 .droite{
     float: right;
+    right: 0%;
+}
+.ContainerMoyen{
+    height: 100%;
+    width: 20%;
+    background-color: brown;
 }
 .Container{
     position: fixed;
-    width:80%;
+    width:100%;
     height: 100%;
     background-color: green;
+}
+#contientMarioEtPiece{
+    display: block;
 }
 .gauche{
     float:left;
@@ -50,7 +60,7 @@
     margin-top: 28rem;
 }
 #icon{
-    margin-right: 5rem;
+    margin-left: 2rem;
 }
 #inventaireNombreChampignon{
     font-size: 1.5rem;
@@ -65,4 +75,27 @@
     visibility:hidden;
     z-index: 0;
     margin-top: -10%;
+}
+#combatBouton{
+
+    margin-top: 25rem;
+}
+#ContientCombat{
+    display: none;
+}
+#marioCombat{
+    margin-top:20% ;
+}
+#bowserCombat{
+    margin-top:15% ;
+    margin-right: 20%;
+}
+#bowserVieIndicateur{
+    margin-top: 1.5rem;
+    margin-right: 1.5rem;
+    font-size: 1.7rem;
+}
+#bonusCombat{
+    display: none;
+    margin-top: 10%;
 }

@@ -11,6 +11,7 @@
             var ouvert=false;
             var gainGenere=0;
             var luigiEstActif=false;
+            var vieDeBowser=1000;
 
             class Bonus 
             {
@@ -182,8 +183,28 @@
                 }
  
             }
-            function combat(){
+           
+            function combat()
+            {
                 document.getElementById('contientMarioEtPiece').style.display='none';
+                document.getElementById('boutique').style.display='none';
+                document.getElementById('ContientCombat').style.display='block';
+                document.getElementById('bonusCombat').style.display='block';
+                
+            }
+
+            function cliqueContreBowser(){
+                if (vieDeBowser>0){
+                    vieDeBowser-=1;
+                    document.getElementById('bowserVieIndicateur').textContent=vieDeBowser+' X ';
+                  
+                }
+                else{
+                    document.getElementById('contientMarioEtPiece').style.display='block';
+                    document.getElementById('ContientCombat').style.display='none';
+
+                }
+                
             }
            
             
@@ -225,19 +246,34 @@
             </div>
 
             <div class="d-flex justify-content-center">  
-                <img src='MarioNSMBUDeluxe.png' class="Mario" id='icon' onclick=saut(); />
+                <img src='MarioNSMBUDeluxe.png' class="Mario" id='icon' onclick="saut();" />
             </div>
 
         </div>
 
+
+
         <div  class='Container' id="ContientCombat"> 
-            
+
+            <div class='d-flex justify-content-end'>
+                <p id="bowserVieIndicateur" class='droite'> 1000 X</p>
+                <img class='droite' src='Bowserhead.png' />
+            </div>
+
+            <div class="gauche " id="marioCombat">
+                <img src='MarioNSMBUDeluxe.png'/>
+            </div>
+
+            <div class="droite " id="bowserCombat">
+                <img src='Bowser.png' onclick="cliqueContreBowser();"/>
+            </div>
+
         </div>
 
 
 
 
-        <div class='ContainerPetit droite'>
+        <div class='ContainerPetit droite' id='boutique'>
 
             <img src='StarCoin.png' class="bonus" id='StarCoin' onclick=multiplicateurDeGain(); />
             <p id='prixPieceEtoile'>Prix : 100</p>
@@ -256,7 +292,7 @@
 
        
 
-        <div id='sac' class="ContainerPetit">
+        <div id='sac' class="ContainerMoyen">
            
             <img src='croix.png' class="droite" id='StarCoin' onclick=apparitionSac(); />
 
@@ -269,14 +305,15 @@
 
                 <p id='inventaireNombreChampignon'>X 0 </p>
             </div>
+        </div>
+
+
+
+        <div class='ContainerPetit droite' id='bonusCombat'>
+
+            <img src='champignon.png' class="bonus" id='champignonCombat'; />
+            <p id=''>Nombre : ?</p>
 
         </div>
-      
-           
-          
-           
-       
-
-
     </body>
 </html>
