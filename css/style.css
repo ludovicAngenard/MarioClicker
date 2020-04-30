@@ -90,6 +90,7 @@ body {
     position: absolute;
     visibility:hidden;
     z-index: 0;
+    margin-top: -8%;
   
 }
 .texte{
