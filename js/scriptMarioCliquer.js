@@ -212,13 +212,15 @@ function cliqueContreBowser(){
 }
 // quand l'utilisateur clique sur le petit champignon en combat ça active le bonus qui double les dégats de marios
 function bonusDeDegats(){
-    console.log(champignon.nombreBonus)
     if(champignon.nombreBonus>0){ 
         champignon.calculNombreEnMoins();
-        console.log('lafin'+champignon.nombreBonus)
         champignon.calculEffetBonus();
         document.getElementById('inventaireNombreChampignon').textContent='X : '+Math.round(champignon.nombreBonus);
+        document.getElementById('NombreChampignon').textContent=Math.round(champignon.nombreBonus)+' X ';
         
     }
  
 }
+
+
+    
