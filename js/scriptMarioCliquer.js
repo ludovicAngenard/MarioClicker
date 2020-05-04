@@ -30,7 +30,7 @@ class Bonus
     }
     calculPrixBonus()
     {            
-        this.prix*=1.5;
+        this.prix*=2;
         return this.prix;
     }
     calculNombreEnMoins(){
@@ -51,7 +51,7 @@ class Bonus
 }
 
 //instance de la class Bonus, pieceEtoile multiplie le gain de pièce par deux
-var pieceEtoile= new Bonus(100,0);
+var pieceEtoile= new Bonus(300,0);
 
 function multiplicateurDeGain(){
    if (score>=Math.round(pieceEtoile.prixBonus))
@@ -61,14 +61,14 @@ function multiplicateurDeGain(){
         pieceEtoile.calculNombreBonus()
         pieceEtoile.calculEffetBonus()
    }
-   document.getElementById('prixPieceEtoile').textContent='Prix : '+Math.round(pieceEtoile.prixBonus);
+   $('#prixPieceEtoile').html(' X '+Math.round(pieceEtoile.prixBonus));
    afficheCompteur()
 }
 
 
 
 //instance de la class Bonus, champignon multiplie les dégats effectués par mario par deux
-var champignon= new Bonus(100,0);
+var champignon= new Bonus(500,0);
 
 function multiplicateurDegat(){
    
@@ -77,13 +77,13 @@ function multiplicateurDegat(){
         champignon.calculPrixBonus();
         champignon.calculNombreBonus();
     }
-    document.getElementById('prixChampignon').textContent='X : '+Math.round(champignon.prixBonus);
-    document.getElementById('inventaireNombreChampignon').textContent='X : '+Math.round(champignon.nombreBonus);
+    $('#prixChampignon').html('X : '+Math.round(champignon.prixBonus));
+    $('#inventaireNombreChampignon').html('X : '+Math.round(champignon.nombreBonus));
     afficheCompteur()
 }
 
 //instance de la class Bonus, luigi est un auto cliqueur qui fait gagner 400 points 
-var luigi= new Bonus(200,0);
+var luigi= new Bonus(100,0);
 function achatAutoGain(){
     if ((score>=Math.round(luigi.prixBonus)) && (!luigiEstActif)){
         score-=Math.round(luigi.prixBonus);
@@ -94,23 +94,23 @@ function achatAutoGain(){
         normal();
        
     }
-    document.getElementById('prixLuigi').textContent='X : '+Math.round(luigi.prixBonus);
+    $('#prixLuigi').html('X : '+Math.round(luigi.prixBonus));
     afficheCompteur()
 }
 
 function autoGain(){
-    if(gainGenere<=40)
+    if(gainGenere<40)
     {
-        document.getElementById('MarioPoids').style.visibility="visible";
-        document.getElementById('pieceDessous').style.visibility="hidden";
+        $('#MarioPoids').css('visibility',"visible");
+        $('#pieceDessous').css('visibility',"hidden");
         setTimeout(ajoutDuGain, 100);
         
     }
     else{
         luigiEstActif=false;
         gainGenere=0;
-        document.getElementById('MarioPoids').style.visibility="hidden";
-        document.getElementById('pieceDessous').style.visibility="hidden";
+        $('#MarioPoids').css('visibility',"hidden");
+        $('#pieceDessous').css('visibility',"hidden");
     }
     
 }
@@ -119,7 +119,7 @@ function ajoutDuGain(){
     score+=10*luigi.effetBonus
     gainGenere+=1; 
     afficheCompteur()
-    document.getElementById('pieceDessous').style.visibility="visible";
+    $('#pieceDessous').css('visibility',"visible");
     setTimeout(autoGain, 200);
     
     
@@ -132,15 +132,15 @@ function saut()
    
     if (!sauter){
         if (luigiEstActif){
-            document.getElementById('icon').src='images/LuigiSaut.png';
+            $('#icon').attr('src','images/LuigiSaut.png');
         }
         else
         {
-            document.getElementById('icon').src='images/sticker-mario-saut.jpg.png';
+            $('#icon').attr('src','images/sticker-mario-saut.jpg.png');
         }
         sauter = !sauter;
         compteur()
-        document.getElementById('piece').style.visibility="visible";
+        $('#piece').css('visibility',"visible");
         setTimeout(normal, 200);
                      
     }
@@ -150,13 +150,13 @@ function saut()
 function normal()
 {
     if (luigiEstActif){
-        document.getElementById('icon').src='images/Luigi.png';
+        $('#icon').attr('src','images/Luigi.png');
     }
     else{
-        document.getElementById('icon').src='images/MarioNSMBUDeluxe.png';
+        $('#icon').attr('src','images/MarioNSMBUDeluxe.png');
     }
     
-    document.getElementById('piece').style.visibility="hidden";
+    $('#piece').css('visibility',"hidden");
     sauter=false;
 
 }
@@ -168,17 +168,17 @@ function compteur(){
 }
 //affiche le nombre de pièce
 function afficheCompteur(){
-    document.getElementById('compteurChiffre').textContent="X "+score;
+    $('#compteurChiffre').html("X "+score);
 }
 
 //quand la boite mystère est cliquée, un onglet apparait sur la gauche avec le nomre de bonus pret pour le combat
 function apparitionSac(){
     if (!ouvert){
-        document.getElementById('sac').style.visibility='visible';
+        $('#sac').css('visibility','visible');
         ouvert=!ouvert;
     }
     else{
-        document.getElementById('sac').style.visibility='hidden';
+        $('#sac').css('visibility','hidden');
         ouvert=!ouvert;
     }
 
@@ -186,25 +186,25 @@ function apparitionSac(){
 //quand l'icone bowser  est cliquée,  le html change pour laisser place au combat 
 function combat()
     {
-        document.getElementById('contientMarioEtPiece').style.display='none';
-        document.getElementById('boutique').style.display='none';
-        document.getElementById('ContientCombat').style.display='block';
-        document.getElementById('bonusCombat').style.display='block';
-        document.getElementById('NombreChampignon').textContent=champignon.nombreBonus+' X ';
+        $('#contientMarioEtPiece').css('display','none');
+        $('#boutique').css('display','none');
+        $('#ContientCombat').css('display','block');
+        $('#bonusCombat').css('display','block');
+        $('#NombreChampignon').html(champignon.nombreBonus +' X ');
         
     }
 //quand on clique sur bowser ça lui enlève des points de vies et quand il meurt ça affiche l'html d'avant 
 function cliqueContreBowser(){
     if (vieDeBowser>0){
         vieDeBowser-=1*champignon.effetBonus;
-        document.getElementById('bowserVieIndicateur').textContent=vieDeBowser+' X ';
+        $('#bowserVieIndicateur').html(vieDeBowser+' X ');
       
     }
     else{
-        document.getElementById('boutique').style.display='block';
-        document.getElementById('contientMarioEtPiece').style.display='block';
-        document.getElementById('ContientCombat').style.display='none';
-        document.getElementById('bonusCombat').style.display='none';
+        $('#boutique').css('display','block');
+        $('#contientMarioEtPiece').css("display",'block');
+        $('#ContientCombat').css('display','none');
+        $('#bonusCombat').css('display','none');
         
 
     }
@@ -215,8 +215,8 @@ function bonusDeDegats(){
     if(champignon.nombreBonus>0){ 
         champignon.calculNombreEnMoins();
         champignon.calculEffetBonus();
-        document.getElementById('inventaireNombreChampignon').textContent='X : '+Math.round(champignon.nombreBonus);
-        document.getElementById('NombreChampignon').textContent=Math.round(champignon.nombreBonus)+' X ';
+        $('#inventaireNombreChampignon').html('X : '+Math.round(champignon.nombreBonus));
+        $('#NombreChampignon').html(Math.round(champignon.nombreBonus)+' X ');
         
     }
  
