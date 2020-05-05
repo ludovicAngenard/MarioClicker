@@ -191,16 +191,21 @@ function combat()
         $('#ContientCombat').css('display','block');
         $('#bonusCombat').css('display','block');
         $('#NombreChampignon').html(champignon.nombreBonus +' X ');
+        setInterval(glissadeCarapaceVerte,1000)
+           
+      
         
     }
 //quand on clique sur bowser ça lui enlève des points de vies et quand il meurt ça affiche l'html d'avant 
-function cliqueContreBowser(){
+function cliqueContreBowser()
+{
     if (vieDeBowser>0){
         vieDeBowser-=1*champignon.effetBonus;
         $('#bowserVieIndicateur').html(vieDeBowser+' X ');
-      
+        
     }
-    else{
+    else
+    {
         $('#boutique').css('display','block');
         $('#contientMarioEtPiece').css("display",'block');
         $('#ContientCombat').css('display','none');
@@ -211,7 +216,8 @@ function cliqueContreBowser(){
     
 }
 // quand l'utilisateur clique sur le petit champignon en combat ça active le bonus qui double les dégats de marios
-function bonusDeDegats(){
+function bonusDeDegats()
+{
     if(champignon.nombreBonus>0){ 
         champignon.calculNombreEnMoins();
         champignon.calculEffetBonus();
@@ -220,6 +226,19 @@ function bonusDeDegats(){
         
     }
  
+}
+
+function glissadeCarapaceVerte()
+{   $('#carapaceVerte').css("display",'block');
+    $('#carapaceVerte').animate
+    (
+        {
+            left:'-55%'
+        },
+        3000
+    )
+ 
+    
 }
 
 

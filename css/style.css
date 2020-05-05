@@ -105,11 +105,17 @@ body {
     display: none;
 }
 #marioCombat{
+    margin-left: 10%;
     margin-top:20% ;
 }
 #bowserCombat{
-    margin-top:15% ;
-    margin-right: 20%;
+    margin-top:18% ;
+    margin-right: 15%;
+}
+#bowserCombat img{
+    height: 450px;
+    width: auto;
+
 }
 #bowserVieIndicateur{
     margin-top: 1.5rem;
@@ -125,4 +131,11 @@ body {
 }
 .fondBrique{
     background-image: url("../images/brique.png");
+}
+#carapaceVerte{
+    position: absolute;
+    display: none;
+    padding-left: 70%;
+    margin-top: 35%;
+   
 }
