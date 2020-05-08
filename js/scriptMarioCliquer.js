@@ -186,12 +186,12 @@ function apparitionSac(){
 //quand l'icone bowser  est cliquée,  le html change pour laisser place au combat 
 function combat()
     {
-        $('#contientMarioEtPiece').css('display','none');
-        $('#boutique').css('display','none');
-        $('#ContientCombat').css('display','block');
-        $('#bonusCombat').css('display','block');
+        $('#contientMarioEtPiece').hide();
+        $('#boutique').hide();
+        $('#ContientCombat').show();
+        $('#bonusCombat').show();
         $('#NombreChampignon').html(champignon.nombreBonus +' X ');
-        setInterval(glissadeCarapaceVerte,1000)
+        setInterval(glissadeCarapaceVerte,8000)
            
       
         
@@ -206,10 +206,10 @@ function cliqueContreBowser()
     }
     else
     {
-        $('#boutique').css('display','block');
-        $('#contientMarioEtPiece').css("display",'block');
-        $('#ContientCombat').css('display','none');
-        $('#bonusCombat').css('display','none');
+        $('#boutique').show();
+        $('#contientMarioEtPiece').show();
+        $('#ContientCombat').hide();
+        $('#bonusCombat').hide();
         
 
     }
@@ -229,17 +229,16 @@ function bonusDeDegats()
 }
 
 function glissadeCarapaceVerte()
-{   $('#carapaceVerte').css("display",'block');
-    $('#carapaceVerte').animate
-    (
-        {
-            left:'-55%'
-        },
-        3000
-    )
- 
+{  
+    $('#carapaceVerte').show();
+    $('#carapaceVerte').animate({left:'-55%'},5000)  
+    $('#carapaceVerte').animate({left:'0'},1)  
+    setTimeout(carapaceRevient,5000)
     
 }
 
-
+function carapaceRevient()
+{
+    $('#carapaceVerte').hide();    
+}
     
