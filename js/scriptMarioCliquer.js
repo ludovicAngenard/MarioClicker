@@ -4,7 +4,7 @@ var score= 0;
 var ouvert=false;
 var gainGenere=0;
 var luigiEstActif=false;
-var vieDeBowser=1000;
+var vieCarapaceVerte=10;
 
 //class Bonus régit le nombre de bonus, leur prix en fonction du nombre d'achat et leur multiplicateur d'effet
 class Bonus 
@@ -49,6 +49,51 @@ class Bonus
     }
 
 }
+
+class Personnage{
+    degat=1;
+    description='Oh un nouvel ennemi !';
+    constructor(nom,niveau,pointDeVie,description)
+    {
+        this.nom=nom;
+        this.niveau=niveau
+        this.pointDeVie=pointDeVie
+        
+        this.description=description;
+        
+    }
+    get nomDuPersonnage()
+    {
+        return this.nom;
+    }
+    get pointDeVieDuPersonnage()
+    {
+        return this.pointDeVie;
+    }
+    get degatDuPersonnage()
+    {
+        return this.degat;
+    }
+    get niveauDuPersonnage()
+    {
+        return this.niveau;
+    }
+    get descriptionDuPersonnage()
+    {
+        return this.description;
+    }
+    calculPointDeVie()
+    {
+        this.pointDeVie-=1;
+    }
+    calculDegat()
+    {
+        this.degat*=this.niveau;
+    }
+    
+}
+
+var bowser= new Personnage('Bowser',2,1000,'Bowser est le boss ultime du jeu')
 
 //instance de la class Bonus, pieceEtoile multiplie le gain de pièce par deux
 var pieceEtoile= new Bonus(300,0);
@@ -191,17 +236,19 @@ function combat()
         $('#ContientCombat').show();
         $('#bonusCombat').show();
         $('#NombreChampignon').html(champignon.nombreBonus +' X ');
-        setInterval(glissadeCarapaceVerte,8000)
-           
-      
+        setTimeout(glissadeCarapaceVerte,8000);
+        
+        bowser.calculDegat()
         
     }
 //quand on clique sur bowser ça lui enlève des points de vies et quand il meurt ça affiche l'html d'avant 
 function cliqueContreBowser()
 {
-    if (vieDeBowser>0){
-        vieDeBowser-=1*champignon.effetBonus;
-        $('#bowserVieIndicateur').html(vieDeBowser+' X ');
+    console.log(bowser.pointDeVieDuPersonnage)
+    if (bowser.pointDeVieDuPersonnage>0){
+        
+        bowser.calculPointDeVie()*champignon.effetBonus;
+        $('#bowserVieIndicateur').html(bowser.pointDeVieDuPersonnage+' X ');
         
     }
     else
@@ -230,15 +277,31 @@ function bonusDeDegats()
 
 function glissadeCarapaceVerte()
 {  
+    vieCarapaceVerte=10
     $('#carapaceVerte').show();
     $('#carapaceVerte').animate({left:'-55%'},5000)  
     $('#carapaceVerte').animate({left:'0'},1)  
-    setTimeout(carapaceRevient,5000)
+    setTimeout(carapaceCacher,5000)
+    setTimeout(glissadeCarapaceVerte,8000)
     
 }
 
-function carapaceRevient()
+function carapaceCacher()
 {
     $('#carapaceVerte').hide();    
 }
-    
+
+function cliqueCarapaceVerte(){
+    vieCarapaceVerte-=1
+    console.log(vieCarapaceVerte)
+    verifierVieCarapaceVerte()
+}
+
+function verifierVieCarapaceVerte()
+{
+    if(vieCarapaceVerte<=0)
+    {
+        carapaceCacher() 
+    }
+
+}
